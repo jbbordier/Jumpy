@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Controls controls;
     public GameManager gameManager;
-    public GameObject pauseMenu;
+
 
     void Awake()
     {
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void Attack(InputAction.CallbackContext context)
     {
-        if (gameManager.IsHammerReady && gameManager.state==GameState.Playing)
+        if (gameManager.IsHammerReady && gameManager.State==GameState.Playing)
         {
             gameManager.isHammerFire = true;
         }
@@ -42,21 +42,27 @@ public class PlayerController : MonoBehaviour
     {
         if (gameManager)
         {
-            if(gameManager.state == GameState.Playing)
+            if(gameManager.State == GameState.Playing)
             {
-                gameManager.state = GameState.Pause;
-                pauseMenu.SetActive(true);
+                gameManager.State = GameState.Pause;
             }
             else
             {
-                gameManager.state = GameState.Playing;
-                pauseMenu.SetActive(false);
+                gameManager.State = GameState.Playing;
             }
         }
     }
     // Update is called once per frame
-    void Update()
+ 
+    public void OnReturnToMainMenu()
     {
-     
+        gameManager.State = GameState.Menu;
     }
+
+    public void OnStartBuildingPress()
+    {
+        gameManager.State = GameState.Building;
+    }
+
+
 }

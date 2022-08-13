@@ -24,7 +24,7 @@ public class Hammer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameManager.state == GameState.Playing)
+        if(gameManager.State == GameState.Playing)
         {
             if (gameManager.isHammerFire)
             {
