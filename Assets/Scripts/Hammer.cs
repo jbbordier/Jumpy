@@ -12,11 +12,12 @@ public class Hammer : MonoBehaviour
     bool flow = true;
     private float _current, _target;
     private Vector3 initialRotation;
+    private bool _reinitFireHammer = false;
 
     public GameManager gameManager;
     void Start()
     {
-        GoalRotation = new Vector3(transform.rotation.x-90, transform.rotation.y, transform.rotation.z);
+        GoalRotation = new Vector3(transform.rotation.eulerAngles.x-90, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         initialRotation = transform.rotation.eulerAngles;
     }
 
@@ -25,20 +26,33 @@ public class Hammer : MonoBehaviour
     {
         if(gameManager.state == GameState.Playing)
         {
-            if (_current == 0)
+            if (gameManager.isHammerFire)
             {
-                _target = 1;
-                _curve = curveDescente;
+                if (_current == 0)
+                {
+                    gameManager.IsHammerReady = true;
+                    _target = 1;
+                    _curve = curveDescente;
+                    if (_reinitFireHammer)
+                    {
+                        gameManager.isHammerFire = false;
+                        _reinitFireHammer = false;
+                    }
+                }
+                if (_current != 0)
+                {
+                    gameManager.IsHammerReady = false;
+                }
+                if (_current == 1)
+                {
+                    _target = 0;
+                    _curve = curveMontee;
+                    _reinitFireHammer = true;
+                }
+                _current = Mathf.MoveTowards(_current, _target, speed * Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(Quaternion.Euler(initialRotation), Quaternion.Euler(GoalRotation), _curve.Evaluate(_current));
             }
-            else if (_current == 1)
-            {
-                _target = 0;
-                _curve = curveMontee;
-            }
-            _current = Mathf.MoveTowards(_current, _target, speed * Time.deltaTime);
-
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(initialRotation), Quaternion.Euler(GoalRotation), _curve.Evaluate(_current));
-
+            
         }
     }
 }

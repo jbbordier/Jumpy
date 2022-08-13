@@ -32,7 +32,10 @@ public class PlayerController : MonoBehaviour
 
     private void Attack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack" + context.ReadValueAsButton());
+        if (gameManager.IsHammerReady && gameManager.state==GameState.Playing)
+        {
+            gameManager.isHammerFire = true;
+        }
     }
 
     private void PausePlay(InputAction.CallbackContext context)
