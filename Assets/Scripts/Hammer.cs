@@ -12,28 +12,33 @@ public class Hammer : MonoBehaviour
     bool flow = true;
     private float _current, _target;
     private Vector3 initialRotation;
+
+    public GameManager gameManager;
     void Start()
     {
-        GoalRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z+90);
+        GoalRotation = new Vector3(transform.rotation.x-90, transform.rotation.y, transform.rotation.z);
         initialRotation = transform.rotation.eulerAngles;
     }
 
     // Update is called once per frame
     void Update()
     {
-      if(_current == 0)
+        if(gameManager.state == GameState.Playing)
         {
-            _target = 1;
-            _curve = curveDescente;
-        }
-        else if (_current == 1)
-        {
-            _target = 0;
-            _curve = curveMontee;
-        }
-        _current = Mathf.MoveTowards(_current, _target, speed * Time.deltaTime);
+            if (_current == 0)
+            {
+                _target = 1;
+                _curve = curveDescente;
+            }
+            else if (_current == 1)
+            {
+                _target = 0;
+                _curve = curveMontee;
+            }
+            _current = Mathf.MoveTowards(_current, _target, speed * Time.deltaTime);
 
-        transform.rotation = Quaternion.Lerp(Quaternion.Euler(initialRotation), Quaternion.Euler(GoalRotation), _curve.Evaluate(_current));
+            transform.rotation = Quaternion.Lerp(Quaternion.Euler(initialRotation), Quaternion.Euler(GoalRotation), _curve.Evaluate(_current));
 
+        }
     }
 }
