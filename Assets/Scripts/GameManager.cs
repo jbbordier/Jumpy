@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject posToCamForBuilding;
     internal bool isHammerFire;
 
-    public bool IsHammerReady { get;  set; }
+    public bool IsHammerReady { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +92,12 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         source.position = target;
+    }
+
+    [ContextMenu("Play")]
+    public void Play()
+    {
+        State = GameState.Playing;
     }
 
 }

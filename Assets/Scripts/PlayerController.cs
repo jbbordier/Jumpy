@@ -64,5 +64,10 @@ public class PlayerController : MonoBehaviour
         gameManager.State = GameState.Building;
     }
 
+    public void OnEnterArene()
+    {
+        gameManager.State = GameState.Playing;
+    }
+
 
 }
