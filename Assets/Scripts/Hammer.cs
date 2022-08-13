@@ -31,7 +31,6 @@ public class Hammer : MonoBehaviour
             _target = 0;
             _curve = curveMontee;
         }
-        Debug.Log(_current);
         _current = Mathf.MoveTowards(_current, _target, speed * Time.deltaTime);
 
         transform.rotation = Quaternion.Lerp(Quaternion.Euler(initialRotation), Quaternion.Euler(GoalRotation), _curve.Evaluate(_current));
