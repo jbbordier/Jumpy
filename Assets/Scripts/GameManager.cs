@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject TopLeft, TopRight, BottomLeft, BottomRight,Goal;
-
+    public GameObject wallsGO;
     public GameObject pauseMenu;
     public GameObject MainMenu;
     public GameObject PlayingSetup;
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject posToCamForBuilding;
     internal bool isHammerFire;
+    int previousGoalPos;
 
     public bool IsHammerReady { get; set; }
 
@@ -43,8 +44,16 @@ public class GameManager : MonoBehaviour
         IsHammerReady = true;
     }
 
-    private void MoveWall()
+    public void MoveWall()
     {
+        foreach (Transform item in wallsGO.transform)
+        {
+            float x = Random.Range(TopLeft.transform.position.x, TopRight.transform.position.x);
+            float z = Random.Range(BottomLeft.transform.position.x, BottomRight.transform.position.x);
+            Vector3 newPos = new Vector3(x, item.position.y, z);
+            //Debug.Log(item.name + item.position +  newPos);
+            //StartCoroutine(MoveObject(item, newPos, 2f));
+        }
         for (int i = 0; i < Surfaces.Length; i++)
         {
             Surfaces[i].BuildNavMesh();
@@ -114,7 +123,11 @@ public class GameManager : MonoBehaviour
 
     public void MoveGoal()
     {
-        int random = Random.Range(1, 4);
+        int random = Random.Range(1, 5);
+        while (random==previousGoalPos)
+        {
+            random = Random.Range(1, 5);
+        }
         switch (random)
         {
             case 1:
@@ -132,6 +145,7 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+        previousGoalPos = random;
 
     }
 

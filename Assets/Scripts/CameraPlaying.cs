@@ -9,7 +9,7 @@ public class CameraPlaying : MonoBehaviour
     void Start()
     {
         main = Camera.main;
-        placement = new Vector3(1, 1, 0);
+        placement = new Vector3(5, 5, 0);
     }
 
     // Update is called once per frame
