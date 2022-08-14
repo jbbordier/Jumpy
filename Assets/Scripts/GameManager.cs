@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameObject TopLeft, TopRight, BottomLeft, BottomRight,Goal;
 
     public GameObject pauseMenu;
     public GameObject MainMenu;
@@ -30,6 +32,10 @@ public class GameManager : MonoBehaviour
 
     public bool IsHammerReady { get; set; }
 
+    [SerializeField]
+    private NavMeshSurface[] Surfaces;
+    public Transform[] WallToMove;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +43,13 @@ public class GameManager : MonoBehaviour
         IsHammerReady = true;
     }
 
-
+    private void MoveWall()
+    {
+        for (int i = 0; i < Surfaces.Length; i++)
+        {
+            Surfaces[i].BuildNavMesh();
+        }
+    }
     public void UnabledScene(GameState stateToLeave, GameState stateToGo)
     {
         switch (stateToLeave)
@@ -99,6 +111,31 @@ public class GameManager : MonoBehaviour
     {
         State = GameState.Playing;
     }
+
+    public void MoveGoal()
+    {
+        int random = Random.Range(1, 4);
+        switch (random)
+        {
+            case 1:
+                Goal.transform.position = TopLeft.transform.position;
+                break;
+            case 2:
+                Goal.transform.position = TopRight.transform.position;
+                break;
+            case 3:
+                Goal.transform.position = BottomLeft.transform.position;
+                break;
+            case 4:
+                Goal.transform.position = BottomRight.transform.position;
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
 
 }
 
