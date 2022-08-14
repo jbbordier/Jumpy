@@ -9,7 +9,10 @@ public class MoveRobot : MonoBehaviour
     public NavMeshAgent agent;
     public GameManager gameManager;
 
-
+    private void Start()
+    {
+        //agent.ResetPath();
+    }
     // Update is called once per frame
     void Update()
     {
