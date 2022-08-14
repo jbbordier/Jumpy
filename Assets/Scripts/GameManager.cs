@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,12 +27,16 @@ public class GameManager : MonoBehaviour
     public GameObject MainMenu;
     public GameObject BuildingMenu;
     public GameObject Goundoum;
+    public int GoundoumHP, RoumbotHP;
+
 
     public GameObject posToCamForBuilding;
     internal bool isHammerFire;
     int previousGoalPos;
 
     public bool IsHammerReady { get; set; }
+    public GameObject EndCanvas;
+    public TextMeshProUGUI textEnd;
 
     [SerializeField]
     private NavMeshSurface Surface;
@@ -42,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.Menu;
         IsHammerReady = true;
+        GoundoumHP = RoumbotHP = 100;
     }
 
     public void MoveWall()
@@ -155,6 +161,20 @@ public class GameManager : MonoBehaviour
         }
         previousGoalPos = random;
 
+    }
+
+    private void Update()
+    {
+        if(GoundoumHP <= 0)
+        {
+            EndCanvas.SetActive(true);
+            textEnd.text = "YOU LOSE !!!";
+        }
+        if (RoumbotHP <= 0)
+        {
+            EndCanvas.SetActive(true);
+            textEnd.text = "YOU WIN !!!";
+        }
     }
 
 

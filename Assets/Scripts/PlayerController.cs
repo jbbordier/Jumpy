@@ -14,8 +14,10 @@ public class PlayerController : MonoBehaviour
     private Controls controls;
     public GameManager gameManager;
     private Camera mainCamera;
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 velocity = Vector3.forward;
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+    public GameObject choosenWeapon;
 
 
     void Awake()
@@ -50,7 +52,7 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray,out hit))
             {
-                if(hit.collider != null)
+                if(hit.collider != null && hit.collider.gameObject.GetComponent<DraggableObject>())
                 {
                     StartCoroutine(DragUpdate(hit.collider.gameObject));
                 }
@@ -87,6 +89,9 @@ public class PlayerController : MonoBehaviour
     public void OnEnterArene()
     {
         gameManager.State = GameState.Playing;
+        choosenWeapon.transform.SetParent(GameObject.Find("Ecrou").transform);
+        Vector3 sub = choosenWeapon.transform.position - choosenWeapon.transform.GetChild(0).position;
+        choosenWeapon.transform.position = choosenWeapon.transform.parent.position + sub + new Vector3(0, 0.05f);
     }
 
     private IEnumerator DragUpdate(GameObject clickedObject)
