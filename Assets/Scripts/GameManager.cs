@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     public bool IsHammerReady { get; set; }
 
     [SerializeField]
-    private NavMeshSurface[] Surfaces;
+    private NavMeshSurface Surface;
     public Transform[] WallToMove;
 
     // Start is called before the first frame update
@@ -53,10 +53,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(item.name + item.position + newPos);
             StartCoroutine(MoveObject(item, newPos, 5f));
         }
-        for (int i = 0; i < Surfaces.Length; i++)
-        {
-            Surfaces[i].BuildNavMesh();
-        }
+        Surface.BuildNavMesh();
     }
     public void UnabledScene(GameState stateToLeave, GameState stateToGo)
     {
@@ -157,6 +154,7 @@ public class GameManager : MonoBehaviour
         previousGoalPos = random;
 
     }
+
 
 
 
