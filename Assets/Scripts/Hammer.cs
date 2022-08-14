@@ -16,7 +16,7 @@ public class Hammer : MonoBehaviour
     private bool _reinitFireHammer = false;
 
     public GameManager gameManager;
-    void Start()
+    public void SetupOrigin()
     {
         GoalRotation = new Vector3(transform.parent.transform.rotation.eulerAngles.x, transform.parent.transform.rotation.eulerAngles.y, transform.parent.transform.rotation.eulerAngles.z);
         initialRotation = new Vector3(GoalRotation.x - 90, GoalRotation.y, GoalRotation.z);
