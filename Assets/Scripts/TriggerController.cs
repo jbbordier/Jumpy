@@ -8,7 +8,7 @@ public class TriggerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision");
-        if (collision.gameObject.name.Contains("Goal"))
+        if (collision.gameObject.name.Contains("Goal")&&GameManager.State == GameState.Playing)
         {
             GameManager.MoveGoal();
         }
@@ -16,7 +16,7 @@ public class TriggerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collision");
-        if (other.gameObject.name.Contains("Goal"))
+        if (other.gameObject.name.Contains("Goal") && GameManager.State == GameState.Playing)
         {
             GameManager.MoveGoal();
             GameManager.MoveWall();

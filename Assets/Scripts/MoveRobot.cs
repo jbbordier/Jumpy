@@ -14,6 +14,8 @@ public class MoveRobot : MonoBehaviour
     void Update()
     {
         if(gameManager.State == GameState.Playing)
-        agent.SetDestination(goalPosition.transform.position);
+        {
+         agent.SetDestination(goalPosition.transform.position);
+        }
     }
 }

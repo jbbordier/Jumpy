@@ -20,11 +20,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject TopLeft, TopRight, BottomLeft, BottomRight,Goal;
+    public GameObject TopLeft, TopRight, BottomLeft, BottomRight, Goal;
     public GameObject wallsGO;
     public GameObject pauseMenu;
     public GameObject MainMenu;
-    public GameObject PlayingSetup;
     public GameObject BuildingMenu;
 
     public GameObject posToCamForBuilding;
@@ -51,8 +50,8 @@ public class GameManager : MonoBehaviour
             float x = Random.Range(TopLeft.transform.position.x, TopRight.transform.position.x);
             float z = Random.Range(BottomLeft.transform.position.x, BottomRight.transform.position.x);
             Vector3 newPos = new Vector3(x, item.position.y, z);
-            //Debug.Log(item.name + item.position +  newPos);
-            //StartCoroutine(MoveObject(item, newPos, 2f));
+            Debug.Log(item.name + item.position + newPos);
+            StartCoroutine(MoveObject(item, newPos, 5f));
         }
         for (int i = 0; i < Surfaces.Length; i++)
         {
@@ -68,9 +67,6 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Building:
                 BuildingMenu.SetActive(false);
-                break;
-            case GameState.Playing:
-                PlayingSetup.SetActive(false);
                 break;
             case GameState.Pause:
                 pauseMenu.SetActive(false);
@@ -92,9 +88,6 @@ public class GameManager : MonoBehaviour
             case GameState.Building:
                 StartCoroutine(MoveObject(Camera.main.transform, posToCamForBuilding.transform.position, 2f));
                 BuildingMenu.SetActive(true);
-                break;
-            case GameState.Playing:
-                PlayingSetup.SetActive(true);
                 break;
             case GameState.Pause:
                 pauseMenu.SetActive(true);
@@ -124,7 +117,7 @@ public class GameManager : MonoBehaviour
     public void MoveGoal()
     {
         int random = Random.Range(1, 5);
-        while (random==previousGoalPos)
+        while (random == previousGoalPos)
         {
             random = Random.Range(1, 5);
         }

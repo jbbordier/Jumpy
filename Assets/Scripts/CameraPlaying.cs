@@ -6,6 +6,7 @@ public class CameraPlaying : MonoBehaviour
 {
     Camera main;
     Vector3 placement;
+   public GameManager gameManager;
     void Start()
     {
         main = Camera.main;
@@ -15,7 +16,10 @@ public class CameraPlaying : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        main.transform.position = transform.position + placement;
-        main.transform.LookAt(transform);
+        if(gameManager.State == GameState.Playing)
+        {
+            main.transform.position = transform.position + placement;
+            main.transform.LookAt(transform);
+        }   
     }
 }

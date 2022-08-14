@@ -36,6 +36,18 @@ public class PlayerController : MonoBehaviour
         {
             gameManager.isHammerFire = true;
         }
+        else if(gameManager.State == GameState.Building)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            RaycastHit hit;
+            if(Physics.Raycast(ray,out hit))
+            {
+                if(hit.collider != null)
+                {
+
+                }
+            }
+        }
     }
 
     private void PausePlay(InputAction.CallbackContext context)
