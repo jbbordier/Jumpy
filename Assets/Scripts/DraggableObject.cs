@@ -4,17 +4,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Collider))]
 public class DraggableObject : MonoBehaviour
 {
-    [SerializeField]
-    InputAction mouseClick;
-    private Camera mainCamera;
+    public GameManager gameManager;
 
-    private void Awake()
+    private void Start()
     {
-        mainCamera = Camera.main;
+        if (gameManager.State == GameState.Building || gameManager.State == GameState.Playing)
+        {
+            gameObject.SetActive(true);
+        }
     }
-
 }
 

@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject MainMenu;
     public GameObject BuildingMenu;
+    public GameObject Goundoum;
 
     public GameObject posToCamForBuilding;
     internal bool isHammerFire;
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour
                 {
                     item.gameObject.SetActive(true);
                 }
+                Goundoum.transform.position = new Vector3(-10, 0.5f, 11);
                 break;
             default:
                 break;
