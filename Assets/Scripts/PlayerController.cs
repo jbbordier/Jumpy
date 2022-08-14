@@ -6,9 +6,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private float mouseDragPhysicsSpeed = 10;
+    [SerializeField]
+    private float mouseDragSpeed = .1f;
 
     private Controls controls;
     public GameManager gameManager;
+    private Camera mainCamera;
+    private Vector3 velocity = Vector3.zero;
+    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
 
     void Awake()
@@ -18,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
+        mainCamera = Camera.main;
     }
     private void OnDisable()
     {
@@ -44,7 +52,7 @@ public class PlayerController : MonoBehaviour
             {
                 if(hit.collider != null)
                 {
-
+                    StartCoroutine(DragUpdate(hit.collider.gameObject));
                 }
             }
         }
@@ -79,6 +87,27 @@ public class PlayerController : MonoBehaviour
     public void OnEnterArene()
     {
         gameManager.State = GameState.Playing;
+    }
+
+    private IEnumerator DragUpdate(GameObject clickedObject)
+    {
+        float initialDistance = Vector3.Distance(clickedObject.transform.position, mainCamera.transform.position);
+        clickedObject.TryGetComponent<Rigidbody>(out var rb);
+        while(controls.Playing.Attack.ReadValue<float>() != 0){
+            Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (rb != null)
+            {
+                Vector3 direction = ray.GetPoint(initialDistance) - clickedObject.transform.position;
+                rb.velocity = direction * mouseDragPhysicsSpeed;
+                yield return waitForFixedUpdate;
+            }
+            else
+            {
+                clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position, ray.GetPoint(initialDistance), ref velocity, mouseDragSpeed);
+                yield return null;
+            }
+        }
+            
     }
 
 

@@ -9,10 +9,12 @@ public class DraggableObject : MonoBehaviour
 {
     [SerializeField]
     InputAction mouseClick;
+    private Camera mainCamera;
 
-    private void OnEnable()
+    private void Awake()
     {
-     
+        mainCamera = Camera.main;
     }
+
 }
 

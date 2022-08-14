@@ -86,11 +86,21 @@ public class GameManager : MonoBehaviour
                 MainMenu.SetActive(true);
                 break;
             case GameState.Building:
+                foreach (Transform item in wallsGO.transform)
+                {
+                    item.gameObject.SetActive(false);
+                }
                 StartCoroutine(MoveObject(Camera.main.transform, posToCamForBuilding.transform.position, 2f));
                 BuildingMenu.SetActive(true);
                 break;
             case GameState.Pause:
                 pauseMenu.SetActive(true);
+                break;
+            case GameState.Playing:
+                foreach (Transform item in wallsGO.transform)
+                {
+                    item.gameObject.SetActive(true);
+                }
                 break;
             default:
                 break;
@@ -112,6 +122,12 @@ public class GameManager : MonoBehaviour
     public void Play()
     {
         State = GameState.Playing;
+    }
+
+    [ContextMenu("Build")]
+    public void Build()
+    {
+        State = GameState.Building;
     }
 
     public void MoveGoal()
